@@ -1,10 +1,12 @@
 package com.example.recruitmentapp01.Entities;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.List;
 
 @Entity
+@Data
 public class Offre {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

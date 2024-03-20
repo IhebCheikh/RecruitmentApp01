@@ -44,8 +44,19 @@ public class OffreServiceImpl implements OffreServices {
     }
 
     @Override
-    public Offre updateOffre(Offre offre) {
-        return this.offreRepo.saveAndFlush(offre);
+    public Offre updateOffre(Long id, Offre offre) {
+        Offre existingOffre = offreRepo.findById(id).orElse(null);
+        if (existingOffre != null) {
+            // Mettre à jour les champs de l'offre existante avec les nouvelles données
+            existingOffre.setTitre(offre.getTitre());
+            existingOffre.setDescription(offre.getDescription());
+            existingOffre.setSalaire(offre.getSalaire());
+
+            // Enregistrer les modifications dans la base de données
+            return offreRepo.save(existingOffre);
+        } else {
+            return null; // Ou lancer une exception appropriée si nécessaire
+        }
     }
 
     @Override

@@ -15,7 +15,7 @@ public interface OffreServices {
     Offre getOffreById(Long id);
     Offre createOffre(Offre offre);
 
-    Offre updateOffre(Offre offre);
+    Offre updateOffre(Long id, Offre offre);
     public void deleteOffre(Long id);
 
 }

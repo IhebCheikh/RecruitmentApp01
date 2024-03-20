@@ -11,60 +11,80 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/offre")
-@CrossOrigin("*")
 public class OffreController {
 
-@Autowired
+    @Autowired
     private OffreServices offreServices;
 
-@GetMapping("/getAll")
-    public ResponseEntity<List<Offre>> getAllOffres(){
-//
-//    try {
-//        List<Offre> offres = offreServices.getAllOffre();
-//        if (offres.isEmpty()) {
-//            return new ResponseEntity<List<Offre>>(HttpStatus.NO_CONTENT);
-//        } else {
-//            return new ResponseEntity<List<Offre>>(offres, HttpStatus.OK);
-//        }
-//    }catch (Exception e){
-//        return new ResponseEntity<List<Offre>>(HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
-     return (ResponseEntity<List<Offre>>) offreServices.getAllOffre();
-}
-
+    @GetMapping("/getAll")
+    public ResponseEntity<List<Offre>> getAllOffres() {
+        List<Offre> offres = offreServices.getAllOffre();
+        if (offres.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(offres, HttpStatus.OK);
+        }
+    }
 
     @GetMapping("/filterByEntreprise/{entreprise}")
-    public ResponseEntity <List<Offre>> getOffreByEntreprise(@PathVariable String entreprise){
-
-            return ResponseEntity.ok(this.offreServices.getOffreByEntreprise(entreprise));
+    public ResponseEntity<List<Offre>> getOffreByEntreprise(@PathVariable String entreprise) {
+        List<Offre> offres = offreServices.getOffreByEntreprise(entreprise);
+        if (offres.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(offres, HttpStatus.OK);
+        }
     }
 
     @GetMapping("/filterBySalaire/{salaire}")
-public ResponseEntity<List<Offre>>getOffreBySalaire(@PathVariable double salaire){
-
-    return ResponseEntity.ok(this.offreServices.getOffreBySalaire(salaire));
+    public ResponseEntity<List<Offre>> getOffreBySalaire(@PathVariable double salaire) {
+        List<Offre> offres = offreServices.getOffreBySalaire(salaire);
+        if (offres.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(offres, HttpStatus.OK);
+        }
     }
 
     @GetMapping("/filterByTitre/{titre}")
-    public ResponseEntity<List<Offre>>getOffreByTitre(@PathVariable String titre){
-    return ResponseEntity.ok(this.offreServices.getOffreByTitre(titre));
+    public ResponseEntity<List<Offre>> getOffreByTitre(@PathVariable String titre) {
+        List<Offre> offres = offreServices.getOffreByTitre(titre);
+        if (offres.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(offres, HttpStatus.OK);
+        }
     }
 
     @GetMapping("/getbyid/{id}")
-    public  Offre getOffreById(@PathVariable Long id){
-    return offreServices.getOffreById(id);
+    public ResponseEntity<Offre> getOffreById(@PathVariable Long id) {
+        Offre offre = offreServices.getOffreById(id);
+        if (offre != null) {
+            return new ResponseEntity<>(offre, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping("/newoffre")
-    public Offre createOffre(@RequestBody Offre offre){
-
-    return offreServices.createOffre(offre);
+    public ResponseEntity<Offre> createOffre(@RequestBody Offre offre) {
+        Offre createdOffre = offreServices.createOffre(offre);
+        return new ResponseEntity<>(createdOffre, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteOffre(@PathVariable("id") Long id){
-    offreServices.deleteOffre(id);
+    public ResponseEntity<Void> deleteOffre(@PathVariable("id") Long id) {
+        offreServices.deleteOffre(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Offre> updateOffre(@PathVariable Long id, @RequestBody Offre offre) {
+        Offre updatedOffre = offreServices.updateOffre(id, offre);
+        if (updatedOffre != null) {
+            return new ResponseEntity<>(updatedOffre, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }
