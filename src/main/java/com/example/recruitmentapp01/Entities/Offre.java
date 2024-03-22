@@ -32,6 +32,7 @@ public class Offre {
 
     @OneToMany(mappedBy = "offre")
     private List<Candidature> candidatures;
+
     public void setId(Long id) {
         this.id = id;
     }
