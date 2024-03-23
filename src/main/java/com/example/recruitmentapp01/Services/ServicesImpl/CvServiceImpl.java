@@ -53,8 +53,9 @@ public class CvServiceImpl implements CvServices {
         if (existingCv != null) {
             // Mettre à jour les champs du CV existant avec les nouvelles données
             existingCv.setId(cv.getId());
-            // Mettre à jour d'autres champs selon vos besoins
-            //existingCv.s(cv.getChamp2());
+            existingCv.setCandidature(cv.getCandidature());
+            existingCv.setDomaine(cv.getDomaine());
+            existingCv.setExperience(cv.getExperience());
 
             // Enregistrer les modifications dans la base de données
             return cvRepository.save(existingCv);

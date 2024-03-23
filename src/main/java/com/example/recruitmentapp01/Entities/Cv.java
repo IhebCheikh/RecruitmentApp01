@@ -1,11 +1,13 @@
 package com.example.recruitmentapp01.Entities;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
+@Data
 public class Cv {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,15 +18,6 @@ public class Cv {
     private String domaine;
     private int experience;
 
-    // added set & get for updating cv
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    // added set & get for updating cv
-    public Long getId() {
-        return id;
-    }
 
     @ManyToOne
     @JoinColumn(name = "candidature_id")
